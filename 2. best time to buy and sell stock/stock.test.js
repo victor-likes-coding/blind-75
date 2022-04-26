@@ -33,4 +33,8 @@ Return the maximum profit you can achieve from this transaction. If you cannot a
     test("in: [7, 6, 4, 3, 1], out: 0", () => {
         expect(profit([7, 6, 4, 3, 1])).toBe(0);
     });
+
+    test("in: [2,4,1], out: 2", () => {
+        expect(profit([2, 4, 1])).toBe(2);
+    });
 });
