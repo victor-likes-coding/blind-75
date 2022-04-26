@@ -26,3 +26,27 @@ const get_prices_larger_than_lowest_price = (prices = []) => {
         return value > lowestPrice;
     });
 };
+
+const profit = (prices = []) => {
+    // keep track of largest profit
+    let largestProfit = 0;
+
+    const lowestPrice = prices[get_lowest_index(prices)];
+
+    const higherPrices = get_prices_larger_than_lowest_price(prices);
+
+    for (let price of higherPrices) {
+        const difference = price - lowestPrice;
+        if (largestProfit < difference) {
+            largestProfit = difference;
+        }
+    }
+
+    return largestProfit;
+};
+
+module.exports = {
+    get_lowest_index,
+    get_prices_larger_than_lowest_price,
+    profit,
+};
