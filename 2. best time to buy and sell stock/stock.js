@@ -49,7 +49,7 @@ const profit = (prices = []) => {
      */
 
     //  keep track of lowest prices
-    let lowestPrice = Math.pow(10, 4); // constraint from blind 75 challenge (highest possible value)
+    let lowestPrice = 10000; // constraint from blind 75 challenge (highest possible value)
     let profit = 0;
     //  go through each price
     for (let i = 0; i < prices.length; i++) {
