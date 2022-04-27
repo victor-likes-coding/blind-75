@@ -10,16 +10,14 @@ const get_lowest_index = (prices = []) => {
     return lowestIndex;
 };
 
-const get_prices_larger_than_lowest_price = (prices = []) => {
-    // get lowest index or if it's the last item
-    const lowestIndex = get_lowest_index(prices);
-    const startIndex = lowestIndex + 1;
+const get_prices_larger_than_lowest_price = (prices = [], index = 0) => {
+    const startIndex = index + 1;
     const pricesLength = prices.length;
 
     // slice the prices array to that we only search for numbers after the lowest index
-    const sliceIndex = startIndex < pricesLength ? startIndex : lowestIndex;
+    const sliceIndex = startIndex < pricesLength ? startIndex : index;
     const splitList = prices.slice(sliceIndex);
-    const lowestPrice = prices[lowestIndex];
+    const lowestPrice = prices[index];
 
     // get only numbers larger than that number at that index
     return splitList.filter((value) => {
@@ -27,22 +25,48 @@ const get_prices_larger_than_lowest_price = (prices = []) => {
     });
 };
 
-const profit = (prices = []) => {
-    // keep track of largest profit
+const getLargestProfit = (higherPrices = [], comparePrice = 0) => {
     let largestProfit = 0;
 
-    const lowestPrice = prices[get_lowest_index(prices)];
-
-    const higherPrices = get_prices_larger_than_lowest_price(prices);
-
     for (let price of higherPrices) {
-        const difference = price - lowestPrice;
+        const difference = price - comparePrice;
         if (largestProfit < difference) {
             largestProfit = difference;
         }
     }
 
     return largestProfit;
+};
+
+const profit = (prices = []) => {
+    // new thought:
+    /*
+     * go through each price,
+     * check if price is smaller than the current smallest price
+     * replace if so, otherwise
+     * check difference in profit between lowestPrice + currentPrice > largest profit
+     *
+     */
+
+    //  keep track of lowest prices
+    let lowestPrice = Math.pow(10, 4); // constraint from blind 75 challenge (highest possible value)
+    let profit = 0;
+    //  go through each price
+    for (let i = 0; i < prices.length; i++) {
+        const currentPrice = prices[i];
+
+        if (currentPrice < lowestPrice) {
+            lowestPrice = currentPrice;
+        } else {
+            // currentPrice is larger than lowestPrice
+            const difference = currentPrice - lowestPrice;
+            if (difference > profit) {
+                profit = difference;
+            }
+        }
+    }
+
+    return profit;
 };
 
 module.exports = {
